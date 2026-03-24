@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Benedicta Eze | Virtual Assistant</title>
+
+  <!-- FAVICON -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23a855f7'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Georgia,serif' font-size='36' font-weight='bold' fill='white'%3EBE%3C/text%3E%3C/svg%3E"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --pink:#ec4899;--pink-light:#f9a8d4;--pink-pale:#fdf2f8;
+      --purple:#a855f7;--purple-dark:#7c3aed;--purple-deep:#2d1b69;
+      --black:#0f0a1a;--white:#ffffff;--off-white:#faf8ff;
+      --text-dark:#1a0533;--text-mid:#5b4d6e;--text-light:#9584b0;
+      --border:#ead5f7;
+      --grad-hero:linear-gradient(135deg,#2d1b69 0%,#1a0533 40%,#3d1060 100%);
+      --grad-accent:linear-gradient(135deg,#ec4899,#a855f7);
+      --grad-soft:linear-gradient(135deg,#fdf2f8 0%,#f3e8ff 100%);
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:'Nunito',sans-serif;color:var(--text-dark);background:var(--white);overflow-x:hidden}
+
+    /* TOPBAR */
+    .topbar{background:var(--grad-accent);color:white;text-align:center;font-size:13px;padding:9px 20px;letter-spacing:.03em;font-weight:500}
+    .topbar a{color:white;text-decoration:none;font-weight:700}
+
+    /* NAV */
+    nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;box-shadow:0 2px 20px rgba(168,85,247,.08)}
+    .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:15px 32px;gap:16px}
+    .logo{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;text-decoration:none;background:var(--grad-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .nav-links{display:flex;gap:24px;list-style:none;align-items:center}
+    .nav-links a{color:var(--text-mid);text-decoration:none;font-size:14px;font-weight:600;transition:color .2s}
+    .nav-links a:hover{color:var(--purple)}
+    .nav-social{display:flex;gap:10px;align-items:center}
+    .nav-social a{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--text-light);border:1px solid var(--border);font-size:13px;transition:all .2s;text-decoration:none}
+    .nav-social a:hover{background:var(--grad-accent);color:white;border-color:transparent;transform:translateY(-2px)}
+    .nav-cta{background:var(--grad-accent);color:white;padding:10px 22px;border-radius:30px;font-size:13px;font-weight:700;text-decoration:none;letter-spacing:.04em;transition:all .2s;box-shadow:0 4px 16px rgba(168,85,247,.35);white-space:nowrap}
+    .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(168,85,247,.45)}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+    .hamburger span{width:24px;height:2px;background:var(--purple);border-radius:2px;display:block}
+
+    /* HERO */
+    .hero{background:var(--grad-hero);color:white;padding:110px 32px 90px;position:relative;overflow:hidden}
+    .hero::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(236,72,153,.25) 0%,transparent 70%);top:-150px;right:-100px;pointer-events:none}
+    .hero::after{content:'';position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(168,85,247,.2) 0%,transparent 70%);bottom:-100px;left:-80px;pointer-events:none}
+    .hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 400px;gap:60px;align-items:center;position:relative;z-index:1}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(236,72,153,.15);border:1px solid rgba(236,72,153,.35);color:var(--pink-light);font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:7px 18px;border-radius:30px;margin-bottom:24px;font-weight:600}
+    .hero h1{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,58px);font-weight:700;line-height:1.12;margin-bottom:22px}
+    .hero h1 em{font-style:italic;background:var(--grad-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero p{color:#c4b0d8;font-size:16px;line-height:1.8;margin-bottom:38px;max-width:500px}
+    .hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+    .btn-primary{background:var(--grad-accent);color:white;padding:14px 32px;border-radius:30px;font-size:14px;font-weight:700;text-decoration:none;letter-spacing:.04em;transition:all .25s;box-shadow:0 6px 24px rgba(236,72,153,.4);display:inline-flex;align-items:center;gap:8px}
+    .btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(236,72,153,.5)}
+    .btn-ghost{border:1.5px solid rgba(255,255,255,.3);color:white;padding:14px 32px;border-radius:30px;font-size:14px;font-weight:600;text-decoration:none;transition:all .25s;display:inline-flex;align-items:center;gap:8px}
+    .btn-ghost:hover{border-color:var(--pink-light);color:var(--pink-light);transform:translateY(-2px)}
+
+    /* hero card */
+    .hero-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:32px;backdrop-filter:blur(12px);animation:float 6s ease-in-out infinite}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    .hero-card-title{font-family:'Playfair Display',serif;font-size:16px;color:var(--pink-light);margin-bottom:22px;font-style:italic}
+    .hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .stat{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:16px;text-align:center}
+    .stat-num{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;background:var(--grad-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+    .stat-label{font-size:10px;color:#9584b0;letter-spacing:.06em;text-transform:uppercase;margin-top:5px}
+    .hero-links{margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,.1)}
+    .hero-links-label{font-size:11px;color:#7d6a93;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;font-weight:600}
+    .hero-link-btns{display:flex;flex-direction:column;gap:9px}
+    .hero-link-btn{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px 14px;text-decoration:none;color:#c4b0d8;font-size:13px;font-weight:600;transition:all .2s}
+    .hero-link-btn:hover{background:rgba(236,72,153,.15);border-color:rgba(236,72,153,.3);color:var(--pink-light)}
+    .hero-link-btn i{width:16px;text-align:center;font-size:13px}
+
+    /* SERVICES STRIP */
+    .services-strip{background:var(--off-white);padding:80px 32px}
+    .strip-inner{max-width:1200px;margin:0 auto}
+    .section-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:8px;background:var(--grad-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:inline-block}
+    .section-title{font-family:'Playfair Display',serif;font-size:clamp(24px,3.5vw,40px);font-weight:700;color:var(--text-dark);margin-bottom:10px;line-height:1.2}
+    .section-sub{color:var(--text-mid);font-size:15px;max-width:520px;margin-bottom:44px;line-height:1.7}
+    .services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    .service-card{background:white;border:1px solid var(--border);border-radius:16px;padding:30px 22px;transition:all .3s;position:relative;overflow:hidden}
+    .service-card::before{content:'';position:absolute;inset:0;background:var(--grad-accent);opacity:0;transition:opacity .3s}
+    .service-card:hover::before{opacity:1}
+    .service-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(168,85,247,.25);border-color:transparent}
+    .service-card:hover .s-icon{background:rgba(255,255,255,.2)}
+    .service-card:hover h4,.service-card:hover p{color:white}
+    .s-icon{width:50px;height:50px;border-radius:12px;background:var(--grad-soft);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:18px;transition:all .3s;position:relative;z-index:1}
+    .service-card h4{font-size:14px;font-weight:700;margin-bottom:9px;color:var(--text-dark);transition:color .3s;position:relative;z-index:1}
+    .service-card p{font-size:13px;color:var(--text-mid);line-height:1.65;transition:color .3s;position:relative;z-index:1}
+
+    /* ABOUT */
+    .about{padding:90px 32px;background:white}
+    .about-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+    .about-img-wrap{position:relative}
+    .about-img-blob{width:100%;aspect-ratio:3/4;background:var(--grad-soft);border-radius:60% 40% 55% 45%/50% 60% 40% 50%;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .ph-inner{display:flex;flex-direction:column;align-items:center;gap:12px;color:var(--text-light)}
+    .ph-inner i{font-size:56px;color:var(--pink-light)}
+    .ph-inner span{font-size:12px;text-align:center;padding:0 28px;line-height:1.6}
+    .deco-ring{position:absolute;width:80px;height:80px;border:4px solid var(--pink);border-radius:50%;bottom:-20px;right:20px}
+    .deco-sq{position:absolute;width:50px;height:50px;background:var(--purple);opacity:.15;border-radius:8px;top:20px;left:-10px;transform:rotate(20deg)}
+    .about p{color:var(--text-mid);font-size:15px;line-height:1.85;margin-bottom:16px}
+    .about-list{list-style:none;margin:22px 0 28px}
+    .about-list li{padding:10px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;font-size:14px;font-weight:500;color:var(--text-dark)}
+    .about-list li i{color:var(--pink);font-size:13px;width:16px}
+    .social-row{display:flex;gap:10px;flex-wrap:wrap}
+    .social-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 17px;border-radius:30px;font-size:13px;font-weight:600;text-decoration:none;border:1.5px solid var(--border);color:var(--text-mid);transition:all .2s}
+    .social-btn:hover{background:var(--grad-accent);color:white;border-color:transparent;transform:translateY(-2px)}
+    .social-btn i{font-size:13px}
+
+    /* WHO I WORK WITH */
+    .clients-band{background:var(--black);padding:64px 32px;text-align:center}
+    .clients-band .section-title{color:white;margin-bottom:36px}
+    .client-types{max-width:820px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+    .client-chip{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.3);color:#c4b0d8;font-size:13px;font-weight:500;padding:10px 20px;border-radius:30px;transition:all .2s;display:flex;align-items:center;gap:7px}
+    .client-chip:hover{background:rgba(236,72,153,.2);border-color:var(--pink);color:var(--pink-light)}
+
+    /* SERVICES DETAIL */
+    .services-detail{background:var(--grad-soft);padding:90px 32px}
+    .sd-inner{max-width:1200px;margin:0 auto}
+    .sd-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:44px}
+    .sd-item{display:flex;gap:16px;background:white;padding:26px 22px;border:1px solid var(--border);border-radius:14px;transition:all .25s;align-items:flex-start}
+    .sd-item:hover{border-color:var(--pink);box-shadow:0 8px 32px rgba(236,72,153,.12);transform:translateY(-3px)}
+    .sd-icon-wrap{width:42px;height:42px;border-radius:10px;background:var(--grad-soft);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:17px}
+    .sd-item h4{font-size:14px;font-weight:700;color:var(--text-dark);margin-bottom:6px}
+    .sd-item p{font-size:13px;color:var(--text-light);line-height:1.65}
+
+    /* PORTFOLIO */
+    .portfolio{padding:90px 32px;background:white}
+    .port-inner{max-width:1200px;margin:0 auto}
+    .port-box{background:var(--grad-hero);border-radius:20px;padding:60px;text-align:center;margin-top:36px;position:relative;overflow:hidden}
+    .port-box::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 50%,rgba(236,72,153,.2) 0%,transparent 60%),radial-gradient(circle at 70% 50%,rgba(168,85,247,.2) 0%,transparent 60%)}
+    .port-box h3{font-family:'Playfair Display',serif;font-size:28px;color:white;margin-bottom:12px;position:relative}
+    .port-box p{color:#c4b0d8;font-size:15px;margin-bottom:28px;position:relative}
+    .port-box a{position:relative}
+
+    /* TESTIMONIALS */
+    .testimonials{background:var(--off-white);padding:90px 32px}
+    .testi-inner{max-width:1200px;margin:0 auto}
+    .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:44px}
+    .testi-card{background:white;border:1px solid var(--border);padding:32px 26px;border-radius:16px;position:relative;transition:all .3s}
+    .testi-card:hover{border-color:var(--pink);box-shadow:0 12px 40px rgba(236,72,153,.1);transform:translateY(-4px)}
+    .testi-quote{position:absolute;top:18px;right:22px;font-family:'Playfair Display',serif;font-size:60px;color:var(--pink-light);line-height:1;opacity:.3}
+    .testi-stars{color:var(--pink);font-size:13px;margin-bottom:14px;letter-spacing:2px}
+    .testi-text{font-size:14px;color:var(--text-mid);line-height:1.85;margin-bottom:22px;font-style:italic}
+    .testi-author{font-size:14px;font-weight:700;color:var(--text-dark)}
+    .testi-role{font-size:12px;color:var(--text-light);margin-top:3px}
+
+    /* CTA */
+    .cta-section{background:var(--grad-hero);padding:100px 32px;text-align:center;position:relative;overflow:hidden}
+    .cta-section::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(236,72,153,.15) 0%,transparent 65%)}
+    .cta-inner{max-width:600px;margin:0 auto;position:relative}
+    .cta-section .section-title{color:white;margin-bottom:16px}
+    .cta-section p{color:#c4b0d8;font-size:16px;margin-bottom:36px;line-height:1.7}
+    .cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+    .contact-info{margin-top:32px;display:flex;flex-wrap:wrap;justify-content:center;gap:20px}
+    .contact-item{display:flex;align-items:center;gap:7px;color:#9584b0;font-size:13px}
+    .contact-item i{color:var(--pink)}
+    .contact-item a{color:var(--pink-light);text-decoration:none;font-weight:600}
+    .contact-item a:hover{color:white}
+
+    /* FOOTER */
+    footer{background:var(--black);color:#6b5880;padding:56px 32px 28px}
+    .footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.06)}
+    .footer-logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;background:var(--grad-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:inline-block;margin-bottom:14px}
+    .footer-brand p{font-size:13px;color:#6b5880;line-height:1.75;max-width:280px;margin-bottom:22px}
+    .footer-social{display:flex;gap:10px}
+    .footer-social a{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:#6b5880;font-size:14px;text-decoration:none;transition:all .2s}
+    .footer-social a:hover{background:var(--grad-accent);color:white;border-color:transparent}
+    .footer-col h5{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#9584b0;margin-bottom:18px;font-weight:700}
+    .footer-col ul{list-style:none}
+    .footer-col li{margin-bottom:11px}
+    .footer-col a{color:#6b5880;text-decoration:none;font-size:13px;transition:color .2s;display:flex;align-items:center;gap:7px}
+    .footer-col a:hover{color:var(--pink-light)}
+    .footer-col a i{font-size:10px;color:var(--purple)}
+    .footer-bottom{max-width:1200px;margin:22px auto 0;display:flex;justify-content:space-between;align-items:center;font-size:12px;flex-wrap:wrap;gap:10px}
+    .footer-bottom a{color:#6b5880;text-decoration:none}
+    .footer-heart{color:var(--pink)}
+
+    /* MOBILE MENU */
+    .mobile-menu{display:none;flex-direction:column;background:white;border-top:1px solid var(--border)}
+    .mobile-menu.open{display:flex}
+    .mobile-menu a{padding:14px 32px;color:var(--text-mid);text-decoration:none;font-size:15px;font-weight:600;border-bottom:1px solid var(--border);transition:color .2s}
+    .mobile-menu a:hover{color:var(--purple)}
+
+    /* ANIMATIONS */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+    .hero-text>*{animation:fadeUp .7s ease both}
+    .hero-badge{animation-delay:.1s}.hero h1{animation-delay:.2s}.hero p{animation-delay:.35s}.hero-btns{animation-delay:.5s}
+
+    /* RESPONSIVE */
+    @media(max-width:960px){
+      .nav-links,.nav-social,.nav-cta{display:none}
+      .hamburger{display:flex}
+      .hero-inner{grid-template-columns:1fr}
+      .hero-card{display:none}
+      .services-grid{grid-template-columns:1fr 1fr}
+      .about-inner{grid-template-columns:1fr}
+      .about-img-wrap{display:none}
+      .testi-grid{grid-template-columns:1fr}
+      .sd-grid{grid-template-columns:1fr}
+      .footer-inner{grid-template-columns:1fr;gap:30px}
+      .footer-bottom{justify-content:center;text-align:center}
+      .port-box{padding:40px 24px}
+    }
+    @media(max-width:600px){
+      .services-grid{grid-template-columns:1fr}
+      .hero{padding:70px 20px 60px}
+      .hero-btns{flex-direction:column;align-items:flex-start}
+      .nav-inner{padding:14px 20px}
+      section,.about,.portfolio,.testimonials,.cta-section{padding-left:20px;padding-right:20px}
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  ✨ Available for US-based clients &nbsp;·&nbsp;
+  <a href="mailto:ezea372@gmail.com">ezea372@gmail.com</a>
+  &nbsp;·&nbsp; Response within 24 hours
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">Benedicta Eze</a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#testimonials">Testimonials</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-social">
+      <a href="https://www.facebook.com/profile.php?id=100074386310960" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/soft_dicta?igsh=MXhwY2tjMWt0MDNpMA%3D%3D&utm_source=qr" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.upwork.com/freelancers/~018a81e209b60805cb?mp_source=share" target="_blank" title="Upwork"><i class="fas fa-briefcase"></i></a>
+    </div>
+    <a href="https://calendly.com/beze19146/30min" target="_blank" class="nav-cta"><i class="fas fa-calendar-check"></i> Book a Call</a>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#services"><i class="fas fa-star" style="color:var(--pink);margin-right:8px"></i>Services</a>
+    <a href="#about"><i class="fas fa-user" style="color:var(--pink);margin-right:8px"></i>About</a>
+    <a href="#portfolio"><i class="fas fa-images" style="color:var(--pink);margin-right:8px"></i>Portfolio</a>
+    <a href="#testimonials"><i class="fas fa-comments" style="color:var(--pink);margin-right:8px"></i>Testimonials</a>
+    <a href="https://calendly.com/beze19146/30min" target="_blank" style="color:var(--purple);font-weight:700"><i class="fas fa-calendar-check" style="margin-right:8px"></i>Book a Call</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-badge"><i class="fas fa-wand-magic-sparkles"></i> Virtual Assistant &amp; Remote Operations</div>
+      <h1>Your dedicated <em>virtual partner</em> for seamless business operations</h1>
+      <p>Hi, I'm Benedicta a detail-obsessed VA with 3+ years supporting US-based small business owners. I handle the tasks that consume your time so you can focus on what truly matters.</p>
+      <div class="hero-btns">
+        <a href="https://calendly.com/beze19146/30min" target="_blank" class="btn-primary"><i class="fas fa-calendar-check"></i> Book a Free Consultation</a>
+        <a href="#services" class="btn-ghost"><i class="fas fa-arrow-down"></i> Explore Services</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-title">Why work with me?</div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-num">3+</div><div class="stat-label">Years Experience</div></div>
+        <div class="stat"><div class="stat-num">US</div><div class="stat-label">Clients Served</div></div>
+        <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Remote Ready</div></div>
+        <div class="stat"><div class="stat-num">24hr</div><div class="stat-label">Response Time</div></div>
+      </div>
+      <div class="hero-links">
+        <div class="hero-links-label">Find me on</div>
+        <div class="hero-link-btns">
+          <a href="https://www.upwork.com/freelancers/~018a81e209b60805cb?mp_source=share" target="_blank" class="hero-link-btn"><i class="fas fa-briefcase"></i> View my Upwork Profile</a>
+          <a href="https://benedictaezeva.my.canva.site" target="_blank" class="hero-link-btn"><i class="fas fa-images"></i> View my Canva Portfolio</a>
+          <a href="https://www.instagram.com/soft_dicta?igsh=MXhwY2tjMWt0MDNpMA%3D%3D&utm_source=qr" target="_blank" class="hero-link-btn"><i class="fab fa-instagram"></i> Follow on Instagram</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-strip" id="services">
+  <div class="strip-inner">
+    <div class="section-label"><i class="fas fa-star"></i> What I Offer</div>
+    <h2 class="section-title">Virtual support that keeps your business moving</h2>
+    <p class="section-sub">From inbox management to website creation I've got every detail covered.</p>
+    <div class="services-grid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="service-card">
+        <div class="s-icon"><i class="fas fa-calendar-alt" style="color:var(--pink)"></i></div>
+        <h4>Virtual Executive Assistance</h4>
+        <p>Calendar management, inbox triage, scheduling, and correspondence so your day runs like clockwork.</p>
+      </div>
+      <div class="service-card">
+        <div class="s-icon"><i class="fas fa-database" style="color:var(--purple)"></i></div>
+        <h4>CRM Management</h4>
+        <p>FollowUpBoss and other CRM platforms managed with precision clean data, timely follow-ups, zero leads lost.</p>
+      </div>
+      <div class="service-card">
+        <div class="s-icon"><i class="fas fa-bullseye" style="color:var(--pink)"></i></div>
+        <h4>Lead Gen &amp; Outreach</h4>
+        <p>Cold outreach, appointment setting, and pipeline building tailored to your ideal target audience.</p>
+      </div>
+      <div class="service-card">
+        <div class="s-icon"><i class="fas fa-hashtag" style="color:var(--purple)"></i></div>
+        <h4>Social Media Management</h4>
+        <p>Content scheduling, engagement, and community management to keep your brand visible and consistent.</p>
+      </div>
+      <div class="service-card">
+        <div class="s-icon"><i class="fas fa-laptop-code" style="color:var(--pink)"></i></div>
+        <h4>Website Creation &amp; Management</h4>
+        <p>Professional websites built and maintained from setup and design to updates, content changes, and ongoing management.</p>
+      </div>
+      <div class="service-card">
+        <div class="s-icon"><i class="fas fa-headset" style="color:var(--purple)"></i></div>
+        <h4>Client Support &amp; Onboarding</h4>
+        <p>Smooth onboarding workflows and professional client communication that makes a lasting first impression.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-img-wrap">
+      <div class="about-img-blob">
+        <div class="ph-inner">
+          <!-- Replace this div with: <img src="your-photo.jpg" style="width:100%;height:100%;object-fit:cover"> -->
+          <i class="fas fa-user-circle"></i>
+          <span>Replace with your photo add an &lt;img&gt; tag here</span>
+        </div>
+      </div>
+      <div class="deco-ring"></div>
+      <div class="deco-sq"></div>
+    </div>
+    <div class="about-content">
+      <div class="section-label"><i class="fas fa-heart"></i> About Me</div>
+      <h2 class="section-title">A remote VA who treats your business like her own</h2>
+      <p>I'm Benedicta Eze, a detail-oriented Virtual Assistant with 3+ years of experience supporting small business owners and entrepreneurs across the United States.</p>
+      <p>My background spans CRM maintenance, lead generation, appointment setting, client onboarding, social media management, and website creation and management. Everything delivered with professionalism, discretion, and a genuine commitment to results.</p>
+      <ul class="about-list">
+        <li><i class="fas fa-check-circle"></i> Expert in FollowUpBoss, Trello, HubSpot &amp; Google Workspace</li>
+        <li><i class="fas fa-check-circle"></i> Website creation, design updates &amp; ongoing management</li>
+        <li><i class="fas fa-check-circle"></i> Reliable, async-friendly across US time zones</li>
+        <li><i class="fas fa-check-circle"></i> Strong written communication, clear, professional, on-brand</li>
+        <li><i class="fas fa-check-circle"></i> Fast onboarding, minimal hand-holding needed</li>
+        <li><i class="fas fa-check-circle"></i> Confidential, deadline-driven, results-focused</li>
+      </ul>
+      <div class="social-row">
+        <a href="https://www.upwork.com/freelancers/~018a81e209b60805cb?mp_source=share" target="_blank" class="social-btn"><i class="fas fa-briefcase"></i> Upwork</a>
+        <a href="https://www.facebook.com/profile.php?id=100074386310960" target="_blank" class="social-btn"><i class="fab fa-facebook-f"></i> Facebook</a>
+        <a href="https://www.instagram.com/soft_dicta?igsh=MXhwY2tjMWt0MDNpMA%3D%3D&utm_source=qr" target="_blank" class="social-btn"><i class="fab fa-instagram"></i> Instagram</a>
+        <a href="mailto:ezea372@gmail.com" class="social-btn" style="background:var(--grad-accent);color:white;border-color:transparent"><i class="fas fa-envelope"></i> Email Me</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO I WORK WITH -->
+<div class="clients-band">
+  <div class="section-label" style="-webkit-text-fill-color:var(--pink-light);display:block;margin-bottom:8px"><i class="fas fa-users"></i> Who I Work With</div>
+  <h2 class="section-title">Built for busy business owners</h2>
+  <div class="client-types">
+    <span class="client-chip"><i class="fas fa-home"></i> Real Estate Professionals</span>
+    <span class="client-chip"><i class="fas fa-shopping-bag"></i> E-commerce Founders</span>
+    <span class="client-chip"><i class="fas fa-chalkboard-teacher"></i> Coaches &amp; Consultants</span>
+    <span class="client-chip"><i class="fas fa-bullhorn"></i> Marketing Agencies</span>
+    <span class="client-chip"><i class="fas fa-rocket"></i> Startups &amp; Solopreneurs</span>
+    <span class="client-chip"><i class="fas fa-briefcase"></i> Service-Based Businesses</span>
+    <span class="client-chip"><i class="fas fa-heartbeat"></i> Healthcare Providers</span>
+    <span class="client-chip"><i class="fas fa-chart-line"></i> Financial Advisors</span>
+  </div>
+</div>
+
+<!-- SERVICES DETAIL -->
+<section class="services-detail">
+  <div class="sd-inner">
+    <div class="section-label"><i class="fas fa-list-check"></i> Full Service List</div>
+    <h2 class="section-title">No task too big, no detail too small</h2>
+    <p class="section-sub">A closer look at everything I can take off your plate.</p>
+    <div class="sd-grid">
+      <div class="sd-item">
+        <div class="sd-icon-wrap"><i class="fas fa-calendar-days" style="color:var(--pink)"></i></div>
+        <div><h4>Calendar &amp; Diary Management</h4><p>Conflict-free scheduling across time zones. I handle bookings, rescheduling, and reminders so you never miss a beat.</p></div>
+      </div>
+      <div class="sd-item">
+        <div class="sd-icon-wrap"><i class="fas fa-inbox" style="color:var(--purple)"></i></div>
+        <div><h4>Inbox Management</h4><p>Triage, respond, archive, and flag your inbox stays under control and nothing important falls through the cracks.</p></div>
+      </div>
+      <div class="sd-item">
+        <div class="sd-icon-wrap"><i class="fas fa-rotate" style="color:var(--pink)"></i></div>
+        <div><h4>CRM Maintenance</h4><p>Data entry, contact updates, follow-up sequences, and pipeline hygiene in FollowUpBoss and beyond.</p></div>
+      </div>
+      <div class="sd-item">
+        <div class="sd-icon-wrap"><i class="fas fa-phone-volume" style="color:var(--purple)"></i></div>
+        <div><h4>Appointment Setting</h4><p>Cold outreach and warm follow-ups turned into booked calls. I handle the back-and-forth so you just show up.</p></div>
+      </div>
+      <div class="sd-item">
+        <div class="sd-icon-wrap"><i class="fas fa-handshake" style="color:var(--pink)"></i></div>
+        <div><h4>Client Onboarding</h4><p>Smooth, professional onboarding workflows that make a great first impression and set clients up for success.</p></div>
+      </div>
+      <div class="sd-item">
+        <div class="sd-icon-wrap"><i class="fas fa-magnifying-glass-chart" style="color:var(--purple)"></i></div>
+        <div><h4>Research &amp; Reports</h4><p>Market research, competitor analysis, data gathering, and document preparation delivered clearly and on time.</p></div>
+      </div>
+      <div class="sd-item">
+        <div class="sd-icon-wrap"><i class="fas fa-pen-to-square" style="color:var(--pink)"></i></div>
+        <div><h4>Content Scheduling</h4><p>Social media posts planned, written, and scheduled to keep your audience engaged and your brand consistent.</p></div>
+      </div>
+      <div class="sd-item">
+        <div class="sd-icon-wrap"><i class="fas fa-comments" style="color:var(--purple)"></i></div>
+        <div><h4>Customer Communication</h4><p>Professional email and chat responses on your behalf, maintaining your brand voice and keeping clients happy.</p></div>
+      </div>
+      <div class="sd-item">
+        <div class="sd-icon-wrap"><i class="fas fa-laptop-code" style="color:var(--pink)"></i></div>
+        <div><h4>Website Creation</h4><p>I build clean, professional websites from scratch, tailored to your brand and business goals. Ready to launch and impress.</p></div>
+      </div>
+      <div class="sd-item">
+        <div class="sd-icon-wrap"><i class="fas fa-screwdriver-wrench" style="color:var(--purple)"></i></div>
+        <div><h4>Website Management &amp; Updates</h4><p>Ongoing website maintenance, content updates, page edits, and technical fixes so your site stays current and running smoothly.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="portfolio" id="portfolio">
+  <div class="port-inner">
+    <div class="section-label"><i class="fas fa-images"></i> Portfolio</div>
+    <h2 class="section-title">See my work in action</h2>
+    <p class="section-sub">Browse my Canva portfolio for samples of my work graphics, social posts, documents, and more.</p>
+    <div class="port-box">
+      <h3>✨ View My Full Portfolio</h3>
+      <p>A curated collection of my best work from social media content to business documents and CRM setups.</p>
+      <a href="https://benedictaezeva.my.canva.site" target="_blank" class="btn-primary" style="font-size:15px;padding:16px 40px">
+        <i class="fas fa-external-link-alt"></i> Open Portfolio
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="testi-inner">
+    <div class="section-label"><i class="fas fa-star"></i> Testimonials</div>
+    <h2 class="section-title">What clients say</h2>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-quote">"</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">Benedicta hit the ground running. Within the first week she had our FollowUpBoss completely reorganised and our follow-up sequence was actually running. She's exactly what a small team needs.</p>
+        <div class="testi-author">Client A</div>
+        <div class="testi-role">Real Estate Broker, Texas</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-quote">"</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">I was drowning in my inbox and calendar. Benny came in, got up to speed with zero drama, and now I actually feel like I have my mornings back. Reliable, sharp, and professional.</p>
+        <div class="testi-author">Client B</div>
+        <div class="testi-role">Business Coach, California</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-quote">"</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">The outreach she ran for us booked more calls in one month than we'd gotten in the previous two combined. Proactive, clear communicator, delivers without chasing.</p>
+        <div class="testi-author">Client C</div>
+        <div class="testi-role">Marketing Agency Owner, New York</div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--text-light);margin-top:18px;font-style:italic;text-align:center">* Replace these with real client testimonials before publishing.</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="cta-inner">
+    <div class="section-label" style="-webkit-text-fill-color:var(--pink-light);color:var(--pink-light)"><i class="fas fa-paper-plane"></i> Let's Talk</div>
+    <h2 class="section-title">Ready to delegate and grow?</h2>
+    <p>Book a free 30-minute discovery call. No commitment required let's see if we're a great fit for each other.</p>
+    <div class="cta-btns">
+      <a href="https://calendly.com/beze19146/30min" target="_blank" class="btn-primary" style="font-size:15px;padding:16px 38px"><i class="fas fa-calendar-check"></i> Book a Free Call</a>
+      <a href="https://www.upwork.com/freelancers/~018a81e209b60805cb?mp_source=share" target="_blank" class="btn-ghost" style="font-size:15px;padding:16px 38px"><i class="fas fa-briefcase"></i> Hire on Upwork</a>
+    </div>
+    <div class="contact-info">
+      <div class="contact-item"><i class="fas fa-envelope"></i> <a href="mailto:ezea372@gmail.com">ezea372@gmail.com</a></div>
+      <div class="contact-item"><i class="fas fa-clock"></i> Response within 24 hours</div>
+      <div class="contact-item"><i class="fas fa-globe"></i> Available for US time zones</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">Benedicta Eze</div>
+      <p>Remote Virtual Assistant supporting US-based business owners with admin, CRM management, lead generation, and more. Professional. Reliable. Results-focused.</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/profile.php?id=100074386310960" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/soft_dicta?igsh=MXhwY2tjMWt0MDNpMA%3D%3D&utm_source=qr" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.upwork.com/freelancers/~018a81e209b60805cb?mp_source=share" target="_blank" title="Upwork"><i class="fas fa-briefcase"></i></a>
+        <a href="https://benedictaezeva.my.canva.site" target="_blank" title="Portfolio"><i class="fas fa-images"></i></a>
+        <a href="/cdn-cgi/l/email-protection#b7d2cdd2d6848085f7d0dad6dedb99d4d8da" title="Email"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Services</h5>
+      <ul>
+        <li><a href="#services"><i class="fas fa-chevron-right"></i> Virtual Executive Assistance</a></li>
+        <li><a href="#services"><i class="fas fa-chevron-right"></i> CRM Management</a></li>
+        <li><a href="#services"><i class="fas fa-chevron-right"></i> Lead Generation</a></li>
+        <li><a href="#services"><i class="fas fa-chevron-right"></i> Social Media</a></li>
+        <li><a href="#services"><i class="fas fa-chevron-right"></i> Appointment Setting</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Quick Links</h5>
+      <ul>
+        <li><a href="#about"><i class="fas fa-chevron-right"></i> About Me</a></li>
+        <li><a href="#portfolio"><i class="fas fa-chevron-right"></i> Portfolio</a></li>
+        <li><a href="#testimonials"><i class="fas fa-chevron-right"></i> Testimonials</a></li>
+        <li><a href="https://www.upwork.com/freelancers/~018a81e209b60805cb?mp_source=share" target="_blank"><i class="fas fa-chevron-right"></i> Upwork Profile</a></li>
+        <li><a href="https://calendly.com/beze19146/30min" target="_blank"><i class="fas fa-chevron-right"></i> Book a Call</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Benedicta Eze Virtual Services. All rights reserved.</span>
+    <span>Made with <span class="footer-heart">♥</span> for remote work</span>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/
